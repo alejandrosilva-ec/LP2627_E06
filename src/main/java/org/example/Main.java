@@ -98,7 +98,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // Ends connections 
+            // Ends connections
             session.close();
             sessionFactory.close();
             System.out.println("\nLigação à base de dados encerrada com sucesso.");

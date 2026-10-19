@@ -17,5 +17,10 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
 
+        <!-- Mapeo de clases -->
+        <mapping class="org.example.modelo.Utilizador"/>
+        <mapping class="org.example.modelo.ObjetoAchado"/>
+        <mapping class="org.example.modelo.RegistoContacto"/>
+
     </session-factory>
 </hibernate-configuration>
