@@ -1,6 +1,12 @@
 package org.example.modelo;
 
-//Lista de los 18 consejos del distrito de Porto
+/**
+ * Representa os 18 concelhos do distrito do Porto.
+ *
+ * <p>Cada valor deste enum corresponde a um concelho do distrito e permite
+ * identificar a localização de um objeto ou de outro registo associado a um
+ * concelho do Porto.
+ */
 public enum ConcelhoPorto {
     AMARANTE,
     BAIAO,

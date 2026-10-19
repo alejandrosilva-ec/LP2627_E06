@@ -1,16 +1,24 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+/**
+ * Classe principal da aplicação.
+ *
+ * <p>O método {@link #main()} apresenta uma mensagem de boas-vindas e imprime
+ * os números de 1 a 5 na saída padrão.
+ */
 public class Main {
+    /**
+     * Ponto de entrada que apresenta uma mensagem de boas-vindas e imprime
+     * os números de 1 a 5, um por linha, na saída padrão.
+     */
     static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
+        // Dica: pressione <shortcut actionId="ShowIntentionActions"/> com o cursor no texto destacado
+        // para ver as sugestões de correção do IntelliJ IDEA.
         IO.println(String.format("Hello and welcome!"));
 
         for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
+            // Dica: pressione <shortcut actionId="Debug"/> para iniciar a depuração do código. Foi definido um ponto de interrupção
+            // para si, mas pode adicionar outros pressionando <shortcut actionId="ToggleLineBreakpoint"/>.
             IO.println("i = " + i);
         }
     }
