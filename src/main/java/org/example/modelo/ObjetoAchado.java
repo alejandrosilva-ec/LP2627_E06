@@ -44,7 +44,7 @@ public class ObjetoAchado {
 
     // US04: 1:N
     @ManyToOne
-    @JoinColumn(name = "utilizador_id", nullable = false) // Esta es la Clave Foránea
+    @JoinColumn(name = "utilizador_id", nullable = false) // Clave Extranjera
     private Utilizador publicador;
 
     // Constructor vacío
