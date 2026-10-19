@@ -9,7 +9,7 @@ public class Utilizador {
 
     @Id // Primary Key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // Long usado para aprovechar el NULL
 
     @Column(nullable = false) // NOT NULL: nome, email, palavraPasse, id, perfil
     private String nome;

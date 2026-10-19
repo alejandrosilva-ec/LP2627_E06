@@ -17,14 +17,16 @@ public class ObjetoAchado {
     @Column(nullable = false)
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String categoria;
+    private CategoriaObjeto categoria;
 
     @Column(nullable = false)
     private String cor;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String concelho; // Distrito do Porto
+    private ConcelhoPorto concelho; //
 
     @Column(nullable = false)
     private String local;
@@ -52,7 +54,7 @@ public class ObjetoAchado {
     }
 
     // Constructor con parámetros
-    public ObjetoAchado(String titulo, String descricao, String categoria, String cor, String concelho, String local, LocalDate dataEncontrado, String contactoDireto, String imagemUrl, EstadoObjeto estado, Utilizador publicador) {
+    public ObjetoAchado(String titulo, String descricao, CategoriaObjeto categoria, String cor, ConcelhoPorto concelho, String local, LocalDate dataEncontrado, String contactoDireto, String imagemUrl, EstadoObjeto estado, Utilizador publicador) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.categoria = categoria;
@@ -90,11 +92,11 @@ public class ObjetoAchado {
         this.descricao = descricao;
     }
 
-    public String getCategoria() {
+    public CategoriaObjeto getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(CategoriaObjeto categoria) {
         this.categoria = categoria;
     }
 
@@ -106,11 +108,11 @@ public class ObjetoAchado {
         this.cor = cor;
     }
 
-    public String getConcelho() {
+    public ConcelhoPorto getConcelho() {
         return concelho;
     }
 
-    public void setConcelho(String concelho) {
+    public void setConcelho(ConcelhoPorto concelho) {
         this.concelho = concelho;
     }
 
