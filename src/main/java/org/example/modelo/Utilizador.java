@@ -1,8 +1,8 @@
 package org.example.modelo;
 
-import jakarta.persistence.*; // Herramientas de Hibernate
+import jakarta.persistence.*; // Hibernate Tools
 
-@Entity // Tabla en la db
+@Entity // Tabla en db
 @Table(name = "utilizadores")
 
 public class Utilizador {
@@ -11,7 +11,7 @@ public class Utilizador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false) // NOT NULL
+    @Column(nullable = false) // NOT NULL: nome, email, palavraPasse, id, perfil
     private String nome;
 
     // US02: email y id únicos
@@ -22,21 +22,22 @@ public class Utilizador {
     private String palavraPasse;
 
     @Column(nullable = false, unique = true)
-    private String documentoIdentificacao;
+    private String docId;
 
     @Enumerated(EnumType.STRING) // USER o ADMIN
     @Column(nullable = false)
     private Perfil perfil;
 
+    // Contructor vacío
     public Utilizador() {
     }
 
-    // Constructor
-    public Utilizador(String nome, String email, String palavraPasse, String documentoIdentificacao, Perfil perfil) {
+    // Constructor con parámetros
+    public Utilizador(String nome, String email, String palavraPasse, String docId, Perfil perfil) {
         this.nome = nome;
         this.email = email;
         this.palavraPasse = palavraPasse;
-        this.documentoIdentificacao = documentoIdentificacao;
+        this.docId = docId;
         this.perfil = perfil;
     }
 
@@ -73,11 +74,11 @@ public class Utilizador {
     }
 
     public String getDocumentoIdentificacao() {
-        return documentoIdentificacao;
+        return docId;
     }
 
-    public void setDocumentoIdentificacao(String documentoIdentificacao) {
-        this.documentoIdentificacao = documentoIdentificacao;
+    public void setDocId(String docId) {
+        this.docId = docId;
     }
 
     public Perfil getPerfil() {
