@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Configuração do projeto Maven.
+
+  Este ficheiro gere as dependências, as versões e as propriedades
+  de compilação do projeto, garantindo que as bibliotecas necessárias
+  (como Hibernate e MySQL Connector) são descarregadas e incluídas
+  automaticamente, conforme os requisitos da avaliação.
+
+  Autor: Esteban Silva
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Identificação do Projeto -->
     <groupId>org.example</groupId>
     <artifactId>E2627_E06</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- Propriedades de Compilação -->
     <properties>
         <maven.compiler.source>27</maven.compiler.source>
         <maven.compiler.target>27</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- Gestão de Dependências -->
     <dependencies>
-        <!--Hibernate Core-->
+        <!--
+          Hibernate Core:
+          Fornece a implementação JPA e o motor de mapeamento objeto-relacional (ORM),
+          necessário para mapear as classes Java para as tabelas da base de dados.
+        -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.4.4.Final</version>
         </dependency>
 
-        <!--Connector MySQL-->
+        <!--
+          Connector MySQL:
+          Driver JDBC que permite à aplicação Java e ao Hibernate comunicarem
+          com o servidor de base de dados MySQL.
+        -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
