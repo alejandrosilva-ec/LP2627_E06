@@ -1,23 +1,35 @@
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<!--
+  Configuração principal do Hibernate (JPA).
+
+  Define os parâmetros de ligação à base de dados MySQL, o comportamento
+  de geração automática de tabelas e o mapeamento das entidades do modelo.
+
+  Autor: Esteban Silva
+-->
+
 <hibernate-configuration>
     <session-factory>
+        <!-- 1. Configurações de Ligação à Base de Dados MySQL -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/objetos_perdidos_db?serverTimezone=UTC</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">1234</property>
 
+        <!-- 2. Dialeto SQL (Permite ao Hibernate traduzir as queries para MySQL) -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
-        <!-- Creación de tablas basado en clases -->
+        <!-- 3. Geração Automática do Esquema (Cria ou atualiza as tabelas com base nas classes @Entity) -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <!-- Ver SQL generado -->
+        <!-- 4. Depuração (Mostra o SQL gerado na consola, útil para ambiente de desenvolvimento) -->
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
 
-        <!-- Mapeo de clases -->
+        <!-- 5. Mapeamento das Classes de Entidade (Registo das classes que representam as tabelas) -->
         <mapping class="org.example.modelo.Utilizador"/>
         <mapping class="org.example.modelo.ObjetoAchado"/>
         <mapping class="org.example.modelo.RegistoContacto"/>
