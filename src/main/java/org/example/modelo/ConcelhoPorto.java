@@ -1,11 +1,13 @@
 package org.example.modelo;
 
 /**
- * Representa os 18 concelhos do distrito do Porto.
+ * Representa os 18 concelhos oficiais do distrito do Porto.
  *
  * <p>Cada valor deste enum corresponde a um concelho do distrito e permite
- * identificar a localização de um objeto ou de outro registo associado a um
- * concelho do Porto.
+ * identificar geograficamente a localização exata onde um objeto foi encontrado
+ * ou perdido.
+ *
+ * @author Esteban Silva
  */
 public enum ConcelhoPorto {
     AMARANTE,

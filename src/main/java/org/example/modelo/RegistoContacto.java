@@ -4,51 +4,47 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Regista uma consulta aos dados de contacto de um objeto encontrado.
+ * Representa o registo histórico de uma consulta aos contactos de um objeto.
  *
- * <p>Cada registo guarda a data e hora da consulta, o utilizador que consultou
- * e o objeto cujo contacto foi consultado. Esta informação permite manter um
- * histórico das consultas realizadas.
+ * Serve para auditar e controlar quantas vezes um utilizador revelou
+ * o contacto de outras pessoas, permitindo aplicar a regra do limite
+ * semanal de segurança (mecanismo antifraude).
  *
- * <p>É uma entidade JPA persistida na tabela {@code registos_contacto} e está
- * associada a um utilizador e a um objeto encontrado.
+ * @author Jorge Pereira
  */
 @Entity
 @Table(name = "registos_contacto")
-
 public class RegistoContacto {
 
     @Id // Chave primária
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Geração automática do identificador
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private LocalDateTime dataConsulta;
 
-    // Relação muitos-para-um com o utilizador que consulta os dados de contacto
+    // Relação 1:N (Um utilizador faz vários registos de consulta)
     @ManyToOne
     @JoinColumn(name = "utilizador_id", nullable = false)
     private Utilizador utilizadorQueConsulta;
 
-    // Relação muitos-para-um com o objeto consultado
+    // Relação 1:N (Um objeto é consultado em vários registos)
     @ManyToOne
     @JoinColumn(name = "objeto_id", nullable = false)
     private ObjetoAchado objetoConsultado;
 
     /**
-     * Cria um registo de contacto sem inicializar os seus campos.
-     *
-     * <p>Este construtor vazio é utilizado pelo JPA ao carregar a entidade.</p>
+     * Construtor vazio obrigatório para o funcionamento do Hibernate/JPA.
      */
     public RegistoContacto() {
     }
 
     /**
-     * Cria um registo de contacto com a data, o utilizador e o objeto indicados.
+     * Cria um novo registo histórico de consulta de contacto.
      *
-     * @param dataConsulta data e hora em que os dados de contacto foram consultados
-     * @param utilizadorQueConsulta utilizador que consultou os dados de contacto
-     * @param objetoConsultado objeto cujos dados de contacto foram consultados
+     * @param dataConsulta data e hora exata em que o contacto foi revelado
+     * @param utilizadorQueConsulta o utilizador que solicitou ver o contacto
+     * @param objetoConsultado o objeto cujo contacto foi revelado
      */
     public RegistoContacto(LocalDateTime dataConsulta, Utilizador utilizadorQueConsulta, ObjetoAchado objetoConsultado) {
         this.dataConsulta = dataConsulta;
@@ -56,42 +52,44 @@ public class RegistoContacto {
         this.objetoConsultado = objetoConsultado;
     }
 
-    /** @return identificador único deste registo de contacto */
+    // --- GETTERS E SETTERS ---
+
+    /** @return o identificador único deste registo */
     public Long getId() {
         return id;
     }
 
-    /** @param id identificador a atribuir a este registo */
+    /** @param id o identificador a atribuir a este registo */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /** @return data e hora em que os dados de contacto foram consultados */
+    /** @return a data e hora em que a consulta ocorreu */
     public LocalDateTime getDataConsulta() {
         return dataConsulta;
     }
 
-    /** @param dataConsulta data e hora da consulta a registar */
+    /** @param dataConsulta a data e hora da consulta a registar */
     public void setDataConsulta(LocalDateTime dataConsulta) {
         this.dataConsulta = dataConsulta;
     }
 
-    /** @return utilizador que consultou os dados de contacto */
+    /** @return o utilizador que realizou a consulta */
     public Utilizador getUtilizadorQueConsulta() {
         return utilizadorQueConsulta;
     }
 
-    /** @param utilizadorQueConsulta utilizador que realizou a consulta */
+    /** @param utilizadorQueConsulta o utilizador a associar a esta consulta */
     public void setUtilizadorQueConsulta(Utilizador utilizadorQueConsulta) {
         this.utilizadorQueConsulta = utilizadorQueConsulta;
     }
 
-    /** @return objeto cujos dados de contacto foram consultados */
+    /** @return o objeto que foi consultado */
     public ObjetoAchado getObjetoConsultado() {
         return objetoConsultado;
     }
 
-    /** @param objetoConsultado objeto associado a esta consulta */
+    /** @param objetoConsultado o objeto a associar a esta consulta */
     public void setObjetoConsultado(ObjetoAchado objetoConsultado) {
         this.objetoConsultado = objetoConsultado;
     }

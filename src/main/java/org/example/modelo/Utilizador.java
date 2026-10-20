@@ -1,32 +1,30 @@
 package org.example.modelo;
 
-import jakarta.persistence.*; // Hibernate Tools
+import jakarta.persistence.*; // Ferramentas do Hibernate
 
 /**
- * Representa um utilizador registado na aplicação.
+ * Representa um utilizador registado no sistema.
  *
- * <p>Guarda os dados de identificação e acesso do utilizador, incluindo nome,
- * endereço de correio eletrónico, palavra-passe, documento de identificação e
- * perfil. O perfil distingue os diferentes papéis disponíveis, como utilizador
- * comum e administrador.
+ * Guarda os dados de identificação e acesso da conta, incluindo nome,
+ * email, palavra-passe, documento de identificação e o perfil.
+ * Para garantir a integridade dos dados (US02), o sistema assegura que
+ * o email e o documento de identificação são únicos para cada utilizador.
  *
- * <p>Esta classe é uma entidade JPA persistida na tabela
- * {@code utilizadores}. O endereço de correio eletrónico e o documento de
- * identificação devem ser únicos.
+ * @author Esteban Silva
+ * @author Enzo Pinto
  */
-@Entity // Tabela em database
+@Entity
 @Table(name = "utilizadores")
-
 public class Utilizador {
 
     @Id // Chave primária
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Long usado para aproveitar o NULL
+    private Long id; // Long usado para aproveitar o valor nulo (null) antes da persistência
 
-    @Column(nullable = false) // NOT NULL: nome, email, palavraPasse, id, perfil
+    @Column(nullable = false)
     private String nome;
 
-    // US02: email e ID únicos
+    // US02: email e documento de identificação devem ser únicos
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -36,26 +34,24 @@ public class Utilizador {
     @Column(nullable = false, unique = true)
     private String docId;
 
-    @Enumerated(EnumType.STRING) // USER o ADMIN
+    @Enumerated(EnumType.STRING) // Guarda como texto (USER ou ADMIN) na base de dados
     @Column(nullable = false)
     private Perfil perfil;
 
     /**
-     * Cria um utilizador sem inicializar os seus campos.
-     *
-     * <p>Este construtor vazio é utilizado pelo JPA ao carregar a entidade.
+     * Construtor vazio obrigatório para o funcionamento do Hibernate/JPA.
      */
     public Utilizador() {
     }
 
     /**
-     * Cria um utilizador com os dados de identificação, acesso e perfil indicados.
+     * Cria um novo utilizador com todos os dados de identificação e acesso.
      *
-     * @param nome nome do utilizador
-     * @param email endereço de correio eletrónico do utilizador
-     * @param palavraPasse palavra-passe do utilizador
-     * @param docId documento de identificação do utilizador
-     * @param perfil perfil atribuído ao utilizador
+     * @param nome o nome completo do utilizador
+     * @param email o endereço de correio eletrónico (deve ser único)
+     * @param palavraPasse a palavra-passe de acesso à plataforma
+     * @param docId o número do documento de identificação (NIF/Passaporte, único)
+     * @param perfil o perfil de permissões atribuído (USER ou ADMIN)
      */
     public Utilizador(String nome, String email, String palavraPasse, String docId, Perfil perfil) {
         this.nome = nome;
@@ -65,62 +61,64 @@ public class Utilizador {
         this.perfil = perfil;
     }
 
-    /** @return identificador único do utilizador */
+    // --- GETTERS E SETTERS ---
+
+    /** @return o identificador único do utilizador */
     public Long getId() {
         return id;
     }
 
-    /** @param id identificador a atribuir ao utilizador */
+    /** @param id o identificador a atribuir ao utilizador */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /** @return nome do utilizador */
+    /** @return o nome do utilizador */
     public String getNome() {
         return nome;
     }
 
-    /** @param nome nome a atribuir ao utilizador */
+    /** @param nome o nome a atribuir ao utilizador */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    /** @return endereço de correio eletrónico do utilizador */
+    /** @return o endereço de correio eletrónico do utilizador */
     public String getEmail() {
         return email;
     }
 
-    /** @param email endereço de correio eletrónico a atribuir ao utilizador */
+    /** @param email o email a atribuir ao utilizador */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /** @return palavra-passe do utilizador */
+    /** @return a palavra-passe da conta do utilizador */
     public String getPalavraPasse() {
         return palavraPasse;
     }
 
-    /** @param palavraPasse palavra-passe a atribuir ao utilizador */
+    /** @param palavraPasse a palavra-passe a atribuir */
     public void setPalavraPasse(String palavraPasse) {
         this.palavraPasse = palavraPasse;
     }
 
-    /** @return documento de identificação do utilizador */
+    /** @return o documento de identificação do utilizador */
     public String getDocumentoIdentificacao() {
         return docId;
     }
 
-    /** @param docId documento de identificação a atribuir ao utilizador */
+    /** @param docId o documento de identificação a atribuir */
     public void setDocId(String docId) {
         this.docId = docId;
     }
 
-    /** @return perfil atribuído ao utilizador */
+    /** @return o perfil de acesso atribuído ao utilizador */
     public Perfil getPerfil() {
         return perfil;
     }
 
-    /** @param perfil perfil a atribuir ao utilizador */
+    /** @param perfil o perfil a atribuir (USER ou ADMIN) */
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }

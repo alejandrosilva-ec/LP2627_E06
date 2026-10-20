@@ -11,19 +11,26 @@ import java.util.List;
 
 /**
  * Ponto de entrada da aplicação de gestão de objetos achados.
- * <p>
- * Configura o Hibernate, cria dados de exemplo quando ainda não existem,
- * pesquisa objetos publicados num concelho e demonstra a regra de negócio
- * que restringe a criação de contas de administrador a utilizadores com perfil
- * {@link Perfil#ADMIN}. No final, encerra a sessão e a fábrica de sessões.
+ *
+ * Este ficheiro atua como um ambiente de testes automatizado.
+ * Configura o Hibernate, cria dados de exemplo na base de dados caso não existam,
+ * executa consultas públicas de pesquisa e demonstra as regras de negócio
+ * exigidas para o Componente 1 do projeto (como restrições de perfis).
+ *
+ * @author Joao Nascimento
+ * @author Enzo Pinto
+ * @author Esteban Silva
  */
 public class Main {
+
     /**
-     * Inicia a aplicação, prepara os dados de exemplo, executa uma pesquisa
-     * pública de objetos no Porto e demonstra a criação autorizada e não
-     * autorizada de contas de administrador.
+     * Inicia a aplicação e executa sequencialmente os testes de persistência.
      *
-     * @param args argumentos da linha de comandos (não utilizados)
+     * Prepara os dados iniciais (utilizadores e objetos), efetua uma pesquisa
+     * filtrada por concelho (US01) e testa os bloqueios de segurança na criação
+     * de novas contas de administrador (US08). No final, encerra a sessão de forma segura.
+     *
+     * @param args argumentos da linha de comandos (não utilizados neste projeto)
      */
     public static void main(String[] args) {
 
@@ -121,16 +128,17 @@ public class Main {
     }
 
     /**
-     * Cria uma conta de administrador se o utilizador indicado tiver perfil
-     * {@link Perfil#ADMIN}. Se o perfil não tiver autorização, regista a recusa
-     * e não insere a conta. Quando autorizado, guarda a nova conta numa
-     * transação usando a sessão Hibernate fornecida.
+     * Tenta criar uma nova conta de administrador validando primeiro as permissões do criador.
      *
-     * @param criador utilizador que solicita a criação da conta
-     * @param nome nome do novo administrador
-     * @param email endereço de email do novo administrador
-     * @param doc documento de identificação do novo administrador
-     * @param session sessão Hibernate usada para persistir a conta
+     * De acordo com as regras de negócio, apenas utilizadores com o perfil ADMIN
+     * podem promover ou criar outras contas ADMIN. Se a validação falhar, o método
+     * bloqueia a operação e emite um aviso. Se tiver sucesso, guarda o novo administrador.
+     *
+     * @param criador o utilizador que está a tentar executar a operação
+     * @param nome o nome do novo administrador
+     * @param email o endereço de email do novo administrador
+     * @param doc o documento de identificação do novo administrador
+     * @param session a sessão ativa do Hibernate usada para persistir a conta
      */
     public static void tentarCriarAdmin(Utilizador criador, String nome, String email, String doc, Session session) {
         // Validar a regra de negócio
