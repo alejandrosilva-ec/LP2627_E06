@@ -1,9 +1,8 @@
 package org.example;
 
 import org.hibernate.Session; // Representa a sessão com a base de dados
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction; // Permite inserir ou alterar registos
-import org.hibernate.cfg.Configuration; // Lê a configuração e regista as classes do modelo
+import org.example.configuracion.HibernateUtil;
 import org.example.modelo.*; // Importa as classes do modelo de dados
 
 import java.time.LocalDate;
@@ -36,7 +35,7 @@ public class Main {
 
         // Iniciar o Hibernate e carregar a configuração
         System.out.println("A iniciar o Hibernate...");
-        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        var sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
         try {
@@ -118,6 +117,7 @@ public class Main {
             tentarCriarAdmin(adminPrincipal, "Novo Admin", "admin2@upt.pt", "88888", session);
 
         } catch (Exception e) {
+            if (session.getTransaction().isActive()) session.getTransaction().rollback();
             e.printStackTrace();
         } finally {
             // Encerrar as ligações
@@ -147,14 +147,16 @@ public class Main {
             return; // Interromper a execução sem criar a conta
         }
 
+        Transaction tx = null;
         try {
             // Se a validação for bem-sucedida, criar e guardar a conta na base de dados
-            Transaction tx = session.beginTransaction();
+            tx = session.beginTransaction();
             Utilizador novoAdmin = new Utilizador(nome, email, "pass123", doc, Perfil.ADMIN);
             session.persist(novoAdmin);
             tx.commit();
             System.out.println("[SUCESSO] O administrador '" + nome + "' foi criado com sucesso na base de dados.");
         } catch (Exception e) {
+            if (tx != null && tx.isActive()) tx.rollback();
             System.out.println("[ERRO] Não foi possível criar o administrador (O email ou documento já existe?).");
         }
     }
